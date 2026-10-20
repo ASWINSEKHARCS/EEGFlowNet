@@ -5,9 +5,6 @@ import torch.nn as nn
 _SIGNAL_LEN: int = 512
 MODEL_ARCH = {
     "EOG": dict(feats=64,  n_heads=1, d_k=64, d_v=64, d_ff=512),
-    "EMG": dict(feats=128, n_heads=2, d_k=64, d_v=64, d_ff=2048),
-    "ECG": dict(feats=64,  n_heads=1, d_k=64, d_v=64, d_ff=512),
-    "MA":  dict(feats=128, n_heads=2, d_k=64, d_v=64, d_ff=2048),
 }
 
 class Conv1d(nn.Conv1d):
