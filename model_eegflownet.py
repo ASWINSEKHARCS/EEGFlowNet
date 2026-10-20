@@ -8,7 +8,6 @@ MODEL_ARCH = {
 }
 
 class Conv1d(nn.Conv1d):
-    """Conv1d with Kaiming-normal weight init and zero-bias init."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,10 +16,6 @@ class Conv1d(nn.Conv1d):
             nn.init.zeros_(self.bias)
 
 class SinusoidalTimeEmbedding(nn.Module):
-    """
-    Parameter-free sinusoidal embedding for continuous time t in [0, 1].
-    Output: [B, dim, 1] — trailing size-1 axis for broadcasting over [B, feats, L].
-    """
 
     def __init__(self, dim: int):
         super().__init__()
@@ -50,10 +45,6 @@ class ScaledDotProductAttention(nn.Module):
 
 
 class MultiHeadAttention(nn.Module):
-    """
-    Multi-head attention with residual connection and LayerNorm.
-    Attribute names (W_Q, W_K, W_V, fc, ln) are part of saved checkpoint keys.
-    """
 
     def __init__(self, d_model: int, n_heads: int, d_k: int, d_v: int):
         super().__init__()
@@ -76,10 +67,6 @@ class MultiHeadAttention(nn.Module):
 
 
 class PoswiseFeedForwardNet(nn.Module):
-    """
-    Position-wise two-layer FFN with residual + LayerNorm.
-    Attribute names (fc, ln) are part of saved checkpoint keys.
-    """
 
     def __init__(self, d_model: int, d_ff: int):
         super().__init__()
@@ -95,10 +82,6 @@ class PoswiseFeedForwardNet(nn.Module):
 
 
 class EncoderLayer(nn.Module):
-    """
-    Transformer encoder block: multi-head self-attention + position-wise FFN.
-    Attribute names (enc_self_attn, pos_ffn) are part of saved checkpoint keys.
-    """
 
     def __init__(self, d_model: int, n_heads: int, d_k: int, d_v: int, d_ff: int):
         super().__init__()
@@ -108,10 +91,6 @@ class EncoderLayer(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.pos_ffn(self.enc_self_attn(x, x, x))
 
-
-# ---------------------------------------------------------------------------
-# Contribution 1: Multi-scale temporal CNN front-end
-# ---------------------------------------------------------------------------
 
 class MultiScaleConvFront(nn.Module):
     def __init__(self, in_ch: int, out_ch: int, scales=(3, 7, 15)):
@@ -131,10 +110,6 @@ class MultiScaleConvFront(nn.Module):
 
 
 class CrossAttentionFusion(nn.Module):
-    """
-    Cross-attention where x_t queries x_noisy features (Q = x_t, K = V = x_noisy).
-    Attribute names (cross, ffn) are part of checkpoint keys.
-    """
 
     def __init__(self, d_model: int, n_heads: int, d_k: int, d_v: int, d_ff: int):
         super().__init__()
