@@ -1,6 +1,6 @@
 # EEGFlowNet
 
-**EEGFlowNet** is a novel Conditional Flow Matching (CFM) model for EEG artifact removal.  
+**EEGFlowNet** is a Conditional Flow Matching (CFM) model for EEG artifact removal.  
 ---
 
 
